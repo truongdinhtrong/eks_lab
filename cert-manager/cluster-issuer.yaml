@@ -1,0 +1,24 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer # ClusterIssuer work với all namespace, Issuer work với 1 namespace
+metadata:
+  # name: letsencrypt-staging # server test
+  name: letsencrypt-prod
+
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    # email: user@example.com 
+    email: truongdinhtrongctim@gmail.com
+    # server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory # chạy production
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      # name: example-issuer-account-key
+      name: letsencrypt-issuer-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: nginx

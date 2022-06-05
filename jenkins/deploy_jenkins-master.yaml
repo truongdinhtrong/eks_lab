@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-jenkins-master
+  namespace: ci-cd
+spec:
+  selector:
+    matchLabels:
+      app: jenkins-master
+  template:
+    metadata:
+      labels:
+        app: jenkins-master
+    spec:
+      volumes:
+      - name: volume-jenkins-master
+        persistentVolumeClaim:
+          claimName: pvc-data-jenkins-master-ebs
+      containers:
+      - name: jenkins-master
+        image: truongdinhtrongctim/jenkins_cicd:1.2
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - mountPath: "/var/jenkins_home"
+            name: volume-jenkins-master
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-master
+  namespace: ci-cd
+spec:
+  selector:
+    app: jenkins-master
+  ports:
+  - port: 8282
+    targetPort: 8080
+    

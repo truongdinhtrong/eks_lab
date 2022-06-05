@@ -1,0 +1,25 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: pv-wordpress-ebs
+provisioner: ebs.csi.aws.com # Amazon EBS CSI driver
+parameters:
+  type: gp3
+  # encrypted: 'true' # EBS volumes will always be encrypted by default
+volumeBindingMode: WaitForFirstConsumer # EBS volumes are AZ specific
+reclaimPolicy: Delete
+mountOptions:
+- debug
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-wordpress-ebs
+spec:
+  storageClassName: pv-wordpress-ebs
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

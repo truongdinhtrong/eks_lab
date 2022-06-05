@@ -795,7 +795,7 @@ ingress-nginx-controller-admission   ClusterIP      10.100.219.204   <none>     
 
 Note: tạo CNAME wordpress.truongdinhtrong.com trỏ về a1cbe4987b9584c85b2af55541a94e68-1431810916.ap-southeast-1.elb.amazonaws.com
 
-##### c. Using public certificate:
+##### c. Configure public certificate:
 
 - tạo secret chứa cert và key:
 ```
